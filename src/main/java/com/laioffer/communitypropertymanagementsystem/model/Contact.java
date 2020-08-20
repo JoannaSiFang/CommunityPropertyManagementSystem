@@ -10,7 +10,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="guest")
-public class Guest {
+public class Contact {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long guestID;
