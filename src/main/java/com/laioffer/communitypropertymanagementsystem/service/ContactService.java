@@ -21,4 +21,8 @@ public class ContactService {
     public List<Contact> getAllContacts() {
         return contactRepository.findAll();
     }
+    
+    public Contact getContactById(Long id) {
+        return contactRepository.findById(id).get();
+    }
 }
