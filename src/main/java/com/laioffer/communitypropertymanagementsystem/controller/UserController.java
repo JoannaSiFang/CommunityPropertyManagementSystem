@@ -53,7 +53,7 @@ public class UserController {
             String userName = params.get("userName");
             if (userService.validUser(userName, user)) {
                 String newPassword = params.get("newPassword");
-                user.setPassword(newPassword);
+                user.setPassword(encoder.encode(newPassword));
                 userService.saveUser(user);
                 return new ResponseEntity(HttpStatus.OK);
             } else {
