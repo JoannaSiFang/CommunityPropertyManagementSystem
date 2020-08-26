@@ -24,7 +24,7 @@ public class ServiceRequestController {
 
     @PostMapping(path = "/makeRequest")
     public @ResponseBody
-    ResponseEntity makeRequest(@RequestParam(value = "user") Integer userId, @RequestBody ServiceRequest serviceRequest) {
+    ResponseEntity makeRequest(@RequestParam(value = "user") Long userId, @RequestBody ServiceRequest serviceRequest) {
         try {
             User user = userService.getUserById(userId);
             if (userService.isAdmin(user)) {
@@ -48,7 +48,7 @@ public class ServiceRequestController {
 
     @GetMapping(path = "/userrequests")
     public @ResponseBody
-    List<ServiceRequest> getRequestsByUser(@RequestParam(value = "user") Integer userId) {
+    List<ServiceRequest> getRequestsByUser(@RequestParam(value = "user") Long userId) {
         try {
             User user = userService.getUserById(userId);
             if (!userService.isAdmin(user)) {

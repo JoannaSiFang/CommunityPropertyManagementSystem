@@ -14,8 +14,12 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public User getUserById(Integer id) {
+    public User getUserById(Long id) {
         return userRepository.findById(id).get();
+    }
+
+    public User getUserByEmail(String emailAddress) {
+        return userRepository.findByEmailAddress(emailAddress).get();
     }
 
     public List<User> getAllUser() {
