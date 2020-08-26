@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 @Entity
 public class ServiceRequest {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private LocalDateTime time;
     private String description;
