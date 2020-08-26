@@ -33,4 +33,8 @@ public class UserService {
     public boolean isAdmin(User user) {
         return user.getRole() == UserRole.ADMIN;
     }
+
+    public boolean validUser(String userName, User user) {
+        return user.getEmailAddress().equals(userName);
+    }
 }

@@ -1,10 +1,13 @@
 package com.laioffer.communitypropertymanagementsystem.controller;
 
 import com.laioffer.communitypropertymanagementsystem.model.User;
+import com.laioffer.communitypropertymanagementsystem.security.service.UserDetailsImpl;
 import com.laioffer.communitypropertymanagementsystem.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -34,22 +37,30 @@ public class UserController {
     }
 
     @GetMapping(path="/profile")
-    public @ResponseBody
-    User getUserById(@RequestParam(value = "userId") Integer userId) {
-        return userService.getUserById(userId);
+    @PreAuthorize("hasRole('TENANT')")
+    public @ResponseBody User getUserProfile() {
+        UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = userService.getUserById(userDetails.getId());
+        return user;
     }
 
     @PostMapping(path="/changepassword")
+    @PreAuthorize("hasRole('TENANT')")
     public ResponseEntity changePassword(@RequestBody Map<String, String> params) {
         try {
-            Integer userId = Integer.valueOf(params.get("User name"));
-            String newPassword = params.get("new Password");
-            User user = userService.getUserById(userId);
-            user.setPassword(newPassword);
-            userService.saveUser(user);
-            return new ResponseEntity(HttpStatus.OK);
+            UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            User user = userService.getUserById(userDetails.getId());
+            String userName = params.get("userName");
+            if (userService.validUser(userName, user)) {
+                String newPassword = params.get("newPassword");
+                user.setPassword(newPassword);
+                userService.saveUser(user);
+                return new ResponseEntity(HttpStatus.OK);
+            } else {
+                return new ResponseEntity(HttpStatus.FORBIDDEN);
+            }
         } catch (NoSuchElementException e){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User Not Found", e);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User Not Found!", e);
         }
     }
 
