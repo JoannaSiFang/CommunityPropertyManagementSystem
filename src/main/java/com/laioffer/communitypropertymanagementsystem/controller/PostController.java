@@ -36,7 +36,7 @@ public class PostController {
             postService.savePost(post);
             return new ResponseEntity(HttpStatus.OK);
         } catch (NoSuchElementException e){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User Not Found", e);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User Not Found!", e);
         }
     }
 
