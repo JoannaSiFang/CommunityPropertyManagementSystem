@@ -17,5 +17,5 @@ phases:
 artifacts:
   type: war
   files:
-    - build/libs/*.war
+    - 'build/libs/*.war'
     - discard-paths: yes
