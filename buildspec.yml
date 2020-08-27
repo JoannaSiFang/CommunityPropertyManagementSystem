@@ -14,7 +14,8 @@ phases:
   post_build:
     commands:
       - echo Build completed on `date`
-      - mv build/libs/*.war app.war
 artifacts:
+  type: war
   files:
-    - 'app.war'
+    - build/libs/*.war
+    - discard-paths: yes
