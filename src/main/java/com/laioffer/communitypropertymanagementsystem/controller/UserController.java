@@ -59,8 +59,22 @@ public class UserController {
             } else {
                 return new ResponseEntity(HttpStatus.FORBIDDEN);
             }
-        } catch (NoSuchElementException e){
+        } catch (NoSuchElementException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User Not Found!", e);
+        }
+    }
+
+    @PostMapping(path = "/deliverypref")
+    @PreAuthorize("hasRole('TENANT')")
+    public ResponseEntity changeDeliveryPref(@RequestParam(value = "preference") Boolean deliveryPref) {
+        try {
+            UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            User user = userService.getUserById(userDetails.getId());
+            user.setDeliverToDoor(deliveryPref);
+            userService.saveUser(user);
+            return new ResponseEntity((HttpStatus.OK));
+        } catch (NoSuchElementException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User Not Found", e);
         }
     }
 

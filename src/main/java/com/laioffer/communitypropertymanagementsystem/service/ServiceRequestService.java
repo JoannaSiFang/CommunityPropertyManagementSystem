@@ -1,6 +1,7 @@
 package com.laioffer.communitypropertymanagementsystem.service;
 
 import com.laioffer.communitypropertymanagementsystem.dao.ServiceRequestRepository;
+import com.laioffer.communitypropertymanagementsystem.dao.UserRepository;
 import com.laioffer.communitypropertymanagementsystem.model.ServiceRequest;
 import com.laioffer.communitypropertymanagementsystem.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,9 @@ import java.util.Queue;
 public class ServiceRequestService {
     @Autowired
     private ServiceRequestRepository serviceRequestRepository;
+
+    @Autowired
+    UserRepository userRepository;
 
     public ServiceRequest saveRequest(ServiceRequest serviceRequest) {
         return serviceRequestRepository.save(serviceRequest);
@@ -27,7 +31,6 @@ public class ServiceRequestService {
     }
 
     public List<ServiceRequest> getRequestByUser(User user) {
-        return serviceRequestRepository.findAll();
-//        Queue query =
+        return userRepository.getOne(user.getId()).getServiceRequests();
     }
 }
