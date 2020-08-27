@@ -1,0 +1,18 @@
+spring:
+  jpa:
+    hibernate:
+      ddlAuto: update
+    show-sql: false
+  datasource:
+    url: jdbc:mysql://laioffer-communitypropertymanagementsystem.cselesgh9onj.us-east-2.rds.amazonaws.com:3306/CommunityPropertyManagementSystem?autoReconnect=true&serverTimezone=UTC
+    username: admin
+    password: admin1234
+
+com:
+  laioffer:
+    communitypropertymanagementsystem:
+      jwtSecret: communityPropertyManagementSystemSecretKey12345678
+      jwtExpirationMs: 86400000
+
+server:
+  port: 5000
