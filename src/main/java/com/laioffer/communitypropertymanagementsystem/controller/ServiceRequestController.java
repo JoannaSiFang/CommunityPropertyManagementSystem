@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 @Controller
+@CrossOrigin(origins = "*", maxAge = 3600)
 public class ServiceRequestController {
     @Autowired
     private ServiceRequestService serviceRequestService;
